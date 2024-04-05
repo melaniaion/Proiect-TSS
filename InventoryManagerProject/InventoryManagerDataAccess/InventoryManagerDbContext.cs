@@ -7,7 +7,7 @@ namespace InventoryManagerDataAccess
     {
         public InventoryManagerDbContext(DbContextOptions<InventoryManagerDbContext> options) : base(options) { }
 
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace InventoryManagerDataAccess
                 .HasIndex(c => c.Name)
                 .IsUnique();
 
-            modelBuilder.Entity<Product>()
+            modelBuilder.Entity<Category>()
                 .HasIndex(p => p.Name)
                 .IsUnique();
         }

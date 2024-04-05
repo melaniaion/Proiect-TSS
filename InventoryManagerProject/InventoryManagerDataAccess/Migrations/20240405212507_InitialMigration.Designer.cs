@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagerDataAccess.Migrations
 {
     [DbContext(typeof(InventoryManagerDbContext))]
-    [Migration("20240405203143_InitialMigration")]
+    [Migration("20240405212507_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -39,7 +39,7 @@ namespace InventoryManagerDataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("InventoryManagerDataAccess.Entities.Product", b =>
@@ -73,10 +73,7 @@ namespace InventoryManagerDataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("InventoryManagerDataAccess.Entities.Product", b =>

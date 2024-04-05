@@ -36,7 +36,7 @@ namespace InventoryManagerDataAccess.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("InventoryManagerDataAccess.Entities.Product", b =>
@@ -70,10 +70,7 @@ namespace InventoryManagerDataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("InventoryManagerDataAccess.Entities.Product", b =>

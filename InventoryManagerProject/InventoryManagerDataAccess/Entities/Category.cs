@@ -14,6 +14,6 @@ namespace InventoryManagerDataAccess.Entities
         [StringLength(200, MinimumLength = 3)]
         public string? Description { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product>? Products { get; set; }
     }
 }
