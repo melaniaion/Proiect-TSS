@@ -9,6 +9,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMyDbContext(builder.Configuration);
+builder.Services.AddServices();
+builder.Services.AddAutoMapper();
 
 var app = builder.Build();
 

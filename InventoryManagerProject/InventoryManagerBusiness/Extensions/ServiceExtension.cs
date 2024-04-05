@@ -1,4 +1,6 @@
-﻿using InventoryManagerDataAccess;
+﻿using InventoryManagerBusiness.Mappers;
+using InventoryManagerDataAccess;
+using InventoryManagerDataAccess.Interfaces;    
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,5 +14,14 @@ namespace InventoryManagerBusiness.Extensions
             services.AddDbContext<InventoryManagerDbContext>(options => options.UseSqlite(configuration.GetConnectionString("DefaultConnection")));
         }
 
+        public static void AddServices(this IServiceCollection services)
+        {
+            services.AddScoped<ICategoryRepository, ICategoryRepository>();
+        }
+
+        public static void AddAutoMapper(this IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(CategoryProfile));
+        }
     }
 }
