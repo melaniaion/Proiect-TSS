@@ -1,9 +1,12 @@
 ﻿using InventoryManagerBusiness.Mappers;
 using InventoryManagerDataAccess;
-using InventoryManagerDataAccess.Interfaces;    
+using InventoryManagerDataAccess.Interfaces;
+using InventoryManagerDataAccess.Repositories;
+using InventoryManagerBusiness.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using InventoryManagerBusiness.Services;
 
 namespace InventoryManagerBusiness.Extensions
 {
@@ -16,7 +19,8 @@ namespace InventoryManagerBusiness.Extensions
 
         public static void AddServices(this IServiceCollection services)
         {
-            services.AddScoped<ICategoryRepository, ICategoryRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)
