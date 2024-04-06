@@ -21,8 +21,7 @@ namespace InventoryManagerAPI.Controllers
             return Ok(categories);
         }
 
-        [HttpGet]
-        [Route("/api/category/{id}")]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
             CategoryResponse category = _categorytService.Get(id);
@@ -59,7 +58,7 @@ namespace InventoryManagerAPI.Controllers
             return Ok(category);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             _categorytService.Delete(id);
