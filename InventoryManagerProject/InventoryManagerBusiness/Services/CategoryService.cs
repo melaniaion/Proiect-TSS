@@ -20,6 +20,11 @@ namespace InventoryManagerBusiness.Services
         public int Create(CategoryDTO categoryDTO)
         {
             Category newCategory = _mapper.Map<Category>(categoryDTO);
+            Category existingCategory = _categoryRepository.Get(newCategory.Id);
+            if (existingCategory != null)
+            {
+                throw new InvalidOperationException("A category with the same ID already exists.");
+            }
             int newCategoryId = _categoryRepository.Create(newCategory);
             return newCategoryId;
         }
@@ -34,19 +39,36 @@ namespace InventoryManagerBusiness.Services
         public CategoryDTO Get(int id)
         {
             Category category = _categoryRepository.Get(id);
+            if (category == null)
+            {
+                throw new KeyNotFoundException($"The product with the specified ID ({id}) was not found.");
+            }
+
             CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(category);
             return categoryDTO;
         }
 
         public void Update(int id, CategoryDTO updatedCategoryDTO)
         {
-            Category category = _mapper.Map<Category>(updatedCategoryDTO);
-            _categoryRepository.Update(id, category);
+            Category category = _categoryRepository.Get(id);
+            if (category == null)
+            {
+                throw new KeyNotFoundException($"The product with the specified ID ({id}) was not found.");
+            }
+
+            Category updatedCategory = _mapper.Map<Category>(updatedCategoryDTO);
+            _categoryRepository.Update(id, updatedCategory, category);
         }
 
         public void Delete(int id)
         {
-            _categoryRepository.Delete(id);
+            Category category = _categoryRepository.Get(id);
+            if(category == null)
+            {
+                throw new KeyNotFoundException($"The product with the specified ID ({id}) was not found.");
+            }
+
+            _categoryRepository.Delete(id, category);
         }
     }
 }

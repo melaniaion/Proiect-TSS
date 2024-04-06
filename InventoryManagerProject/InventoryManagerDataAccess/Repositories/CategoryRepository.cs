@@ -13,12 +13,6 @@ namespace InventoryManagerDataAccess.Repositories
 
         public int Create(Category category)
         {
-            Category existingCategory = _context.Categories.FirstOrDefault(c => c.Id == category.Id);
-            if (existingCategory != null)
-            {
-                throw new ArgumentException("Category id already exists!");
-            }
-
             _context.Categories.Add(category);
             _context.SaveChanges();
             int categoryId = category.Id;
@@ -35,36 +29,19 @@ namespace InventoryManagerDataAccess.Repositories
         public Category Get(int id)
         {
             Category category = _context.Categories.FirstOrDefault(c => c.Id == id);
-            if (category == null)
-            {
-                throw new ArgumentException("Invalid category id!");
-            }
-
             return category;
         }
 
-        public void Update(int id, Category updatedCategory)
+        public void Update(int id, Category updatedCategory, Category categoryToUpdate)
         {
-            Category categoryToUpdate = _context.Categories.FirstOrDefault(c => c.Id == id);
-            if (categoryToUpdate == null)
-            {
-                throw new ArgumentException("Invalid category id!");
-            }
-            
             categoryToUpdate.Name = updatedCategory.Name;
             categoryToUpdate.Description = updatedCategory.Description;
 
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(int id, Category category)
         {
-            Category category = _context.Categories.FirstOrDefault(c => c.Id == id);
-            if (category == null)
-            {
-                throw new ArgumentException("Invalid category id!");
-            }
-
             _context.Categories.Remove(category);
             _context.SaveChanges();
         }
