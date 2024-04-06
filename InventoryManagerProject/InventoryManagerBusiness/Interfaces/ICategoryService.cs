@@ -6,10 +6,10 @@ namespace InventoryManagerBusiness.Interfaces
 {
     public interface ICategoryService
     {
-        int Create(CategoryDTO categoryDTO);
-        List<CategoryDTO> Get();
-        CategoryDTO Get(int id);
-        void Update(int id, CategoryDTO updatedCategoryDTO);
+        int Create(CategoryRequest categoryDTO);
+        List<CategoryResponse> Get();
+        CategoryResponse Get(int id);
+        void Update(int id, CategoryRequest updatedCategoryDTO);
         void Delete(int id);
     }
 }

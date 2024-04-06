@@ -8,7 +8,8 @@ namespace InventoryManagerBusiness.Mappers
     {
         public CategoryProfile()
         {
-            CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<CategoryRequest, Category>();
+            CreateMap<Category, CategoryResponse>();
         }
     }
 }

@@ -22,8 +22,9 @@ namespace InventoryManagerDataAccess.Entities
         [Range(1, int.MaxValue)]
         public int Stock { get; set; }
 
+        [Required]
         [StringLength(100)]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }

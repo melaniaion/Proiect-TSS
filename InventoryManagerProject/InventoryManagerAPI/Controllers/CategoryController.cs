@@ -17,7 +17,7 @@ namespace InventoryManagerAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<CategoryDTO> categories = _categorytService.Get();
+            List<CategoryResponse> categories = _categorytService.Get();
             return Ok(categories);
         }
 
@@ -25,7 +25,7 @@ namespace InventoryManagerAPI.Controllers
         [Route("/api/category/{id}")]
         public IActionResult Get(int id)
         {
-            CategoryDTO category = _categorytService.Get(id);
+            CategoryResponse category = _categorytService.Get(id);
             if (category == null)
             {
                 return NotFound();
@@ -34,7 +34,7 @@ namespace InventoryManagerAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] CategoryDTO category)
+        public IActionResult Post([FromBody] CategoryRequest category)
         {
             if (category == null)
             {
@@ -48,7 +48,7 @@ namespace InventoryManagerAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] CategoryDTO category)
+        public IActionResult Put(int id, [FromBody] CategoryRequest category)
         {
             if (category == null)
             {

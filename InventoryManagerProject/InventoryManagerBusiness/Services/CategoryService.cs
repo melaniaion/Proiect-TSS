@@ -17,7 +17,7 @@ namespace InventoryManagerBusiness.Services
             _mapper = mapper;
         }
 
-        public int Create(CategoryDTO categoryDTO)
+        public int Create(CategoryRequest categoryDTO)
         {
             Category newCategory = _mapper.Map<Category>(categoryDTO);
             Category existingCategory = _categoryRepository.Get(newCategory.Id);
@@ -29,14 +29,14 @@ namespace InventoryManagerBusiness.Services
             return newCategoryId;
         }
 
-        public List<CategoryDTO> Get()
+        public List<CategoryResponse> Get()
         {
             List<Category> categories = _categoryRepository.GetAll();
-            List<CategoryDTO> categoryDTO = _mapper.Map<List<CategoryDTO>>(categories);
+            List<CategoryResponse> categoryDTO = _mapper.Map<List<CategoryResponse>>(categories);
             return categoryDTO;
         }
 
-        public CategoryDTO Get(int id)
+        public CategoryResponse Get(int id)
         {
             Category category = _categoryRepository.Get(id);
             if (category == null)
@@ -44,11 +44,11 @@ namespace InventoryManagerBusiness.Services
                 throw new KeyNotFoundException($"The product with the specified ID ({id}) was not found.");
             }
 
-            CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(category);
+            CategoryResponse categoryDTO = _mapper.Map<CategoryResponse>(category);
             return categoryDTO;
         }
 
-        public void Update(int id, CategoryDTO updatedCategoryDTO)
+        public void Update(int id, CategoryRequest updatedCategoryDTO)
         {
             Category category = _categoryRepository.Get(id);
             if (category == null)

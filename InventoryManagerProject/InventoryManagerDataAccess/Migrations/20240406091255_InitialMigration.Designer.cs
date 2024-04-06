@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagerDataAccess.Migrations
 {
     [DbContext(typeof(InventoryManagerDbContext))]
-    [Migration("20240405212507_InitialMigration")]
+    [Migration("20240406091255_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -26,6 +26,7 @@ namespace InventoryManagerDataAccess.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
@@ -52,6 +53,7 @@ namespace InventoryManagerDataAccess.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
