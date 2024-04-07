@@ -57,7 +57,7 @@ namespace InventoryManagerBusiness.Services
             }
 
             Category updatedCategory = _mapper.Map<Category>(updatedCategoryDTO);
-            _categoryRepository.Update(id, updatedCategory, category);
+            _categoryRepository.Update(updatedCategory, category);
         }
 
         public void Delete(int id)
@@ -68,7 +68,7 @@ namespace InventoryManagerBusiness.Services
                 throw new KeyNotFoundException($"The product with the specified ID ({id}) was not found.");
             }
 
-            _categoryRepository.Delete(id, category);
+            _categoryRepository.Delete(category);
         }
     }
 }
