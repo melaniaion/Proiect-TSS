@@ -32,6 +32,17 @@ namespace InventoryManagerAPI.Controllers
             return Ok(product);
         }
 
+        [HttpGet("category/{categoryId}")]
+        public IActionResult GetByCategory(int categoryId)
+        {
+            List<ProductResponse> products = _productService.GetByCategory(categoryId);
+            if (products == null)
+            {
+                return NotFound();
+            }
+            return Ok(products);
+        }
+
         [HttpPost]
         public IActionResult Post([FromBody] ProductRequest product)
         {

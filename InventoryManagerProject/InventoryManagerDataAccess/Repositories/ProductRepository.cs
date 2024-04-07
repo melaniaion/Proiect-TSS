@@ -32,6 +32,12 @@ namespace InventoryManagerDataAccess.Repositories
             return product;
         }
 
+        public List<Product> GetByCategory(int categoryId)
+        {
+            List<Product> products = _context.Products.Where(p => p.CategoryId == categoryId).ToList();
+            return products;
+        }
+
         public void Update(Product updatedProduct, Product productToUpdate)
         {
             productToUpdate.Name = updatedProduct.Name;

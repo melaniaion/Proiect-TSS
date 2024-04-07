@@ -48,6 +48,17 @@ namespace InventoryManagerBusiness.Services
             return productDto;
         }
 
+        public List<ProductResponse> GetByCategory(int categoryId)
+        {
+            List<Product> products = _productRepository.GetByCategory(categoryId);
+            if (products.Count == 0)
+            {
+                throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+            }
+            List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+            return productsDto;
+        }
+
         public void Update(int id, ProductRequest updatedProductDto)
         {
             Product productToUpdate = _productRepository.Get(id);
