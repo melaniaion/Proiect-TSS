@@ -21,6 +21,8 @@ namespace InventoryManagerBusiness.Extensions
         {
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
         }
 
         public static void AddAutoMapper(this IServiceCollection services)
