@@ -32,7 +32,7 @@ namespace InventoryManagerDataAccess.Repositories
             return category;
         }
 
-        public void Update(int id, Category updatedCategory, Category categoryToUpdate)
+        public void Update(Category updatedCategory, Category categoryToUpdate)
         {
             categoryToUpdate.Name = updatedCategory.Name;
             categoryToUpdate.Description = updatedCategory.Description;
@@ -40,7 +40,7 @@ namespace InventoryManagerDataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public void Delete(int id, Category category)
+        public void Delete(Category category)
         {
             _context.Categories.Remove(category);
             _context.SaveChanges();
