@@ -33,7 +33,7 @@ namespace InventoryManagerAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] ProductDto product)
+        public IActionResult Post([FromBody] ProductRequest product)
         {
             if (product == null)
             {
