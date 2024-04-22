@@ -20,10 +20,14 @@ namespace InventoryManagerBusiness.Services
         public int Create(ProductRequest productDto)
         {
             Product newProduct = _mapper.Map<Product>(productDto);
-            Product existingtProduct = _productRepository.Get(newProduct.Id);
-            if (existingtProduct != null)
+
+            List<Product> allProducts = _productRepository.GetAll();
+            for (int i = 0; i < allProducts.Count; i++)
             {
-                throw new InvalidOperationException("A product with the same ID already exists.");
+                if (allProducts[i].Name == newProduct.Name)
+                {
+                    throw new InvalidOperationException("A product with the same name already exists.");
+                }
             }
             int newProductId = _productRepository.Create(newProduct);
             return newProductId;
