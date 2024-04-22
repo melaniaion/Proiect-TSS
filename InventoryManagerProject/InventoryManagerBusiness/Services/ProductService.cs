@@ -9,12 +9,14 @@ namespace InventoryManagerBusiness.Services
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public ProductService(IProductRepository productRepository, IMapper mapper)
+        public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _mapper = mapper;
+            _categoryRepository = categoryRepository;
         }
 
         public int Create(ProductRequest productDto)
@@ -54,13 +56,21 @@ namespace InventoryManagerBusiness.Services
 
         public List<ProductResponse> GetByCategory(int categoryId)
         {
-            List<Product> products = _productRepository.GetByCategory(categoryId);
-            if (products.Count == 0)
+            Category category = _categoryRepository.Get(categoryId);
+            if (category == null)
             {
-                throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found.");
             }
-            List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
-            return productsDto;
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 0)
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                return productsDto;
+            }
         }
 
         public void Update(int id, ProductRequest updatedProductDto)
