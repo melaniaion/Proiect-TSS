@@ -51,9 +51,9 @@ namespace InventoryManagerBusiness.Services
         public List<ProductResponse> GetByCategory(int categoryId,int index)
         {
             Category category = _categoryRepository.Get(categoryId);
-            if (category == null)
+            if (category == null || index<0)
             {
-                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found.");
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
             }
             else
             {
@@ -64,7 +64,7 @@ namespace InventoryManagerBusiness.Services
                 }
                 else
                 {
-         
+
                     List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
                     if (productsDto.Count < index)
                     {
@@ -72,7 +72,7 @@ namespace InventoryManagerBusiness.Services
                     }
                     else
                     {
-                        List<ProductResponse> displayedProducts = new List<ProductResponse> ();
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
                         while (index != 0)
                         {
                             displayedProducts.Add(productsDto[index]);
@@ -81,7 +81,7 @@ namespace InventoryManagerBusiness.Services
                         for (int i = 0; i < displayedProducts.Count; i++)
                         {
                             displayedProducts[i].DiscountedPrice = displayedProducts[i].FullPrice - (displayedProducts[i].FullPrice * displayedProducts[i].Discount / 100);
-                           
+
                         }
                         return displayedProducts;
                     }
