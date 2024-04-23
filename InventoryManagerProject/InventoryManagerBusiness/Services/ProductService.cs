@@ -3,6 +3,7 @@ using InventoryManagerBusiness.DTOs;
 using InventoryManagerBusiness.Interfaces;
 using InventoryManagerDataAccess.Entities;
 using InventoryManagerDataAccess.Interfaces;
+using System.Reflection.Metadata.Ecma335;
 
 namespace InventoryManagerBusiness.Services
 {
@@ -11,6 +12,7 @@ namespace InventoryManagerBusiness.Services
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+   
 
         public ProductService(IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
@@ -23,6 +25,7 @@ namespace InventoryManagerBusiness.Services
         {
             Product newProduct = _mapper.Map<Product>(productDto);
             int newProductId = _productRepository.Create(newProduct);
+
             return newProductId;
         }
 
@@ -45,7 +48,7 @@ namespace InventoryManagerBusiness.Services
             return productDto;
         }
 
-        public List<ProductResponse> GetByCategory(int categoryId)
+        public List<ProductResponse> GetByCategory(int categoryId,int index)
         {
             Category category = _categoryRepository.Get(categoryId);
             if (category == null)
@@ -59,8 +62,30 @@ namespace InventoryManagerBusiness.Services
                 {
                     throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
                 }
-                List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
-                return productsDto;
+                else
+                {
+         
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse> ();
+                        while (index != 0)
+                        {
+                            displayedProducts.Add(productsDto[index]);
+                            index--;
+                        }
+                        for (int i = 0; i < displayedProducts.Count; i++)
+                        {
+                            displayedProducts[i].DiscountedPrice = displayedProducts[i].FullPrice - (displayedProducts[i].FullPrice * displayedProducts[i].Discount / 100);
+                           
+                        }
+                        return displayedProducts;
+                    }
+                }
             }
         }
 

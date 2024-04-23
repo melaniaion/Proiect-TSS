@@ -7,7 +7,7 @@ namespace InventoryManagerBusiness.Interfaces
         int Create(ProductRequest productDto);
         List<ProductResponse> Get();
         ProductResponse Get(int id);
-        List<ProductResponse> GetByCategory(int categoryId);
+        List<ProductResponse> GetByCategory(int categoryId,int index);
         void Update(int id, ProductRequest updatedProductDto);
         void Delete(int id);
     }

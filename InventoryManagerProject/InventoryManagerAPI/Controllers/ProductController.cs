@@ -34,9 +34,9 @@ namespace InventoryManagerAPI.Controllers
         }
 
         [HttpGet("category/{categoryId}")]
-        public IActionResult GetByCategory(int categoryId)
+        public IActionResult GetByCategory(int categoryId,int index)
         {
-            List<ProductResponse> products = _productService.GetByCategory(categoryId);
+            List<ProductResponse> products = _productService.GetByCategory(categoryId,index);
             if (products == null)
             {
                 return NotFound();
