@@ -1,6 +1,7 @@
 ﻿using InventoryManagerBusiness.DTOs;
 using InventoryManagerBusiness.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace InventoryManagerAPI.Controllers
 {
@@ -46,9 +47,14 @@ namespace InventoryManagerAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ProductRequest product)
         {
-            if (product == null)
+            var validationContext = new ValidationContext(product, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+            bool isValid = Validator.TryValidateObject(product, validationContext, validationResults, validateAllProperties: true);
+
+            if (!isValid)
             {
-                return BadRequest("Product data is required!");
+                var errors = validationResults.Select(vr => vr.ErrorMessage);
+                return BadRequest(errors);
             }
 
             int newProductId = _productService.Create(product);
