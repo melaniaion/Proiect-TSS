@@ -16,11 +16,11 @@ namespace InventoryManagerDataAccess.Entities
         public string Description { get; set; }
 
         [Required]
-        [Range(1, 100000)]
+        [Range(1, int.MaxValue)]
         public int Stock { get; set; }
 
         [Required]
-        [Range(0, 1000000.00)]
+        [Range(0, double.MaxValue)]
         public double Price { get; set; }
 
         [Required]
