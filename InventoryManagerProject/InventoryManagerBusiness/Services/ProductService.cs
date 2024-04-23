@@ -3,7 +3,6 @@ using InventoryManagerBusiness.DTOs;
 using InventoryManagerBusiness.Interfaces;
 using InventoryManagerDataAccess.Entities;
 using InventoryManagerDataAccess.Interfaces;
-using System.Reflection.Metadata.Ecma335;
 
 namespace InventoryManagerBusiness.Services
 {
@@ -51,7 +50,7 @@ namespace InventoryManagerBusiness.Services
         public List<ProductResponse> GetByCategory(int categoryId,int index)
         {
             Category category = _categoryRepository.Get(categoryId);
-            if (category == null || index<0)
+            if (category == null || index < 0)
             {
                 throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
             }
