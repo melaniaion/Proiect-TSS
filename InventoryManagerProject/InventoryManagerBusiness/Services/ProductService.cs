@@ -72,15 +72,11 @@ namespace InventoryManagerBusiness.Services
                     else
                     {
                         List<ProductResponse> displayedProducts = new List<ProductResponse>();
-                        while (index != 0)
-                        {
-                            displayedProducts.Add(productsDto[index]);
-                            index--;
-                        }
+
                         for (int i = 0; i < displayedProducts.Count; i++)
                         {
-                            displayedProducts[i].DiscountedPrice = displayedProducts[i].FullPrice - (displayedProducts[i].FullPrice * displayedProducts[i].Discount / 100);
-
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100)
+                            displayedProducts.Add(productsDto[i]);
                         }
                         return displayedProducts;
                     }

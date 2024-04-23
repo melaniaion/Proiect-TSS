@@ -2,9 +2,7 @@
 using InventoryManagerAPI.Controllers;
 using InventoryManagerBusiness.DTOs;
 using InventoryManagerBusiness.Interfaces;
-using InventoryManagerBusiness.Services;
 using InventoryManagerDataAccess.Entities;
-using InventoryManagerDataAccess.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;

@@ -100,6 +100,12 @@ namespace InventoryManagerServiceTests
                 new Product { Id = 2, Name = "Product 2", Price = 200, Stock = 20, Discount = 20, Description = "Desc 2", CategoryId = categoryId },
                 new Product { Id = 3, Name = "Product 3", Price = 300, Stock = 30, Discount = 30, Description = "Desc 3", CategoryId = categoryId }
             };
+            var productsMapped = new List<ProductResponse>
+            {
+                new ProductResponse { Id = 1, Name = "Product 1", FullPrice = 100, Stock = 10, Discount = 10, Description = "Desc 1", CategoryId = categoryId, DiscountedPrice = 90 },
+                new ProductResponse { Id = 2, Name = "Product 2", FullPrice = 200, Stock = 20, Discount = 20, Description = "Desc 2", CategoryId = categoryId, DiscountedPrice = 160 },
+                new ProductResponse { Id = 3, Name = "Product 3", FullPrice = 300, Stock = 30, Discount = 30, Description = "Desc 3", CategoryId = categoryId, DiscountedPrice = 210 }
+            };
             var productResponses = new List<ProductResponse>
             {
                 new ProductResponse { Id = 1, Name = "Product 1", FullPrice = 100, Discount = 10, Stock = 10, Description = "Desc 1", CategoryId = categoryId, DiscountedPrice = 90 },
@@ -108,7 +114,7 @@ namespace InventoryManagerServiceTests
 
             _mockCategoryRepository.Setup(x => x.Get(categoryId)).Returns(new Category { Id = categoryId, Name = "Category 1", Description = "Desc 1"});
             _mockProductRepository.Setup(x => x.GetByCategory(categoryId)).Returns(products);
-            _mockMapper.Setup(x => x.Map<List<ProductResponse>>(products)).Returns(productResponses);
+            _mockMapper.Setup(x => x.Map<List<ProductResponse>>(products)).Returns(productsMapped);
 
             // Act
             var result = _productService.GetByCategory(categoryId, index);
