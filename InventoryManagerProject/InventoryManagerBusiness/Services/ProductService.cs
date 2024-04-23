@@ -77,7 +77,7 @@ namespace InventoryManagerBusiness.Services
 
                         while(i < index)
                         {
-                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100)
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
                             displayedProducts.Add(productsDto[i]);
                             i++;
                         }
