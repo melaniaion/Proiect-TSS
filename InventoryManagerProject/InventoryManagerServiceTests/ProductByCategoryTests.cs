@@ -91,38 +91,65 @@ namespace InventoryManagerServiceTests
         [Test]
         public void GetByCategory_Success_ReturnsCorrectProductsAndDiscounts()
         {
-            // Arrange
             int categoryId = 1;
             int index = 2;
-            var products = new List<Product>
+            
+            //first if
+            
+            Category category = null;
+            List<Product> products = new();
+            List<ProductResponse> productsMapped = new();
+            List<ProductResponse> productResponses = new();
+
+            _mockCategoryRepository.Setup(x => x.Get(categoryId)).Returns(category);
+            _mockProductRepository.Setup(x => x.GetByCategory(categoryId)).Returns(products);
+            _mockMapper.Setup(x => x.Map<List<ProductResponse>>(products)).Returns(productsMapped);
+
+            var ex1 = Assert.Throws<KeyNotFoundException>(() => _productService.GetByCategory(categoryId, index));
+            Assert.That(ex1.Message, Is.EqualTo($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0."));
+
+            //second if
+
+            category = new Category { Id = categoryId, Name = "Category 1", Description = "Desc 1" };
+            _mockCategoryRepository.Setup(x => x.Get(categoryId)).Returns(category);
+
+            var ex2 = Assert.Throws<KeyNotFoundException>(() => _productService.GetByCategory(categoryId, index));
+            Assert.That(ex2.Message, Is.EqualTo($"No products were found for the specified category ID ({categoryId})."));
+
+            //third if
+
+            products = new List<Product>
             {
                 new Product { Id = 1, Name = "Product 1", Price = 100, Stock = 10, Discount = 10, Description = "Desc 1", CategoryId = categoryId },
                 new Product { Id = 2, Name = "Product 2", Price = 200, Stock = 20, Discount = 20, Description = "Desc 2", CategoryId = categoryId },
                 new Product { Id = 3, Name = "Product 3", Price = 300, Stock = 30, Discount = 30, Description = "Desc 3", CategoryId = categoryId }
             };
-            var productsMapped = new List<ProductResponse>
+            _mockProductRepository.Setup(x => x.GetByCategory(categoryId)).Returns(products);
+            _mockMapper.Setup(x => x.Map<List<ProductResponse>>(products)).Returns(productsMapped);
+
+            var ex3 = Assert.Throws<KeyNotFoundException>(() => _productService.GetByCategory(categoryId, index));
+            Assert.That(ex3.Message, Is.EqualTo($"There are not ({index}) products in this category ({categoryId})."));
+
+            //else
+
+            productsMapped = new List<ProductResponse>
             {
                 new ProductResponse { Id = 1, Name = "Product 1", FullPrice = 100, Stock = 10, Discount = 10, Description = "Desc 1", CategoryId = categoryId, DiscountedPrice = 90 },
                 new ProductResponse { Id = 2, Name = "Product 2", FullPrice = 200, Stock = 20, Discount = 20, Description = "Desc 2", CategoryId = categoryId, DiscountedPrice = 160 },
                 new ProductResponse { Id = 3, Name = "Product 3", FullPrice = 300, Stock = 30, Discount = 30, Description = "Desc 3", CategoryId = categoryId, DiscountedPrice = 210 }
             };
-            var productResponses = new List<ProductResponse>
+            productResponses = new List<ProductResponse>
             {
                 new ProductResponse { Id = 1, Name = "Product 1", FullPrice = 100, Discount = 10, Stock = 10, Description = "Desc 1", CategoryId = categoryId, DiscountedPrice = 90 },
                 new ProductResponse { Id = 2, Name = "Product 2", FullPrice = 200, Discount = 20, Stock = 20, Description = "Desc 2", CategoryId = categoryId, DiscountedPrice = 160 }
             };
-
-            _mockCategoryRepository.Setup(x => x.Get(categoryId)).Returns(new Category { Id = categoryId, Name = "Category 1", Description = "Desc 1"});
-            _mockProductRepository.Setup(x => x.GetByCategory(categoryId)).Returns(products);
             _mockMapper.Setup(x => x.Map<List<ProductResponse>>(products)).Returns(productsMapped);
 
-            // Act
             var result = _productService.GetByCategory(categoryId, index);
 
-            // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result.Count, Is.EqualTo(index), "The number of returned products should match the index provided.");
-            for (int i = 0; i < productResponses.Count ; i++)
+            for (int i = 0; i < productResponses.Count; i++)
             {
                 var expectedDiscountedPrice = productResponses[i].FullPrice - (productResponses[i].FullPrice * productResponses[i].Discount / 100);
                 Assert.That(result[i].DiscountedPrice, Is.EqualTo(expectedDiscountedPrice), "The discounted price should be calculated correctly.");
