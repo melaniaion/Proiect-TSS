@@ -50,6 +50,7 @@ namespace InventoryManagerBusiness.Services
         public List<ProductResponse> GetByCategory(int categoryId,int index)
         {
             Category category = _categoryRepository.Get(categoryId);
+            
             if (category == null || index < 0)
             {
                 throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
@@ -70,18 +71,13 @@ namespace InventoryManagerBusiness.Services
                         throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
                     }
                     else
-                    {
-                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
-
+                    {List<ProductResponse> displayedProducts = new List<ProductResponse>();
                         int i = 0;
-
                         while(i < index)
                         {
                             productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
-                            displayedProducts.Add(productsDto[i]);
-                            i++;
+                            displayedProducts.Add(productsDto[i]);i++;
                         }
-
                         return displayedProducts;
                     }
                 }
