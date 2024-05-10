@@ -84,6 +84,267 @@ namespace InventoryManagerBusiness.Services
             }
         }
 
+        public List<ProductResponse> GetByCategoryM1(int categoryId, int index)
+        {
+            Category category = _categoryRepository.Get(categoryId);
+
+            if (category == null || index < 0)
+            {
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 0)
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                else
+                {
+
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
+                        int i = 0;
+                        while (i < index)
+                        {
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
+                            displayedProducts.Add(productsDto[i]); i--;  // T1
+                        }
+                        return displayedProducts;
+                    }
+                }
+            }
+        }
+        public List<ProductResponse> GetByCategoryM2(int categoryId, int index)
+        {
+            Category category = _categoryRepository.Get(categoryId);
+
+            if (category == null || index >= 0) //T2
+            {
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 0)
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                else
+                {
+
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
+                        int i = 0;
+                        while (i < index)
+                        {
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
+                            displayedProducts.Add(productsDto[i]); i++;
+                        }
+                        return displayedProducts;
+                    }
+                }
+            }
+        }
+        public List<ProductResponse> GetByCategoryM3(int categoryId, int index)
+        {
+            Category category = _categoryRepository.Get(categoryId);
+
+            if (category == null || index >= 0) //t2
+            {
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 0)
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                else
+                {
+
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
+                        int i = 0;
+                        while (i < index)
+                        {
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
+                            displayedProducts.Add(productsDto[i]); i--; //t1
+                        }
+                        return displayedProducts;
+                    }
+                }
+            }
+        }
+        public List<ProductResponse> GetByCategoryM4(int categoryId, int index)
+        {
+            Category category = _categoryRepository.Get(categoryId);
+            index = index + 1; //t3
+            if (category == null || index < 0)
+            {
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 0)
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                else
+                {
+
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
+                        int i = 0;
+                        while (i < index)
+                        {
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
+                            displayedProducts.Add(productsDto[i]); i++;
+                        }
+                        return displayedProducts;
+                    }
+                }
+            }
+        }
+        public List<ProductResponse> GetByCategoryM5(int categoryId, int index)
+        {
+            Category category = _categoryRepository.Get(categoryId);
+            index = index + 1; //t3
+            if (category == null || index >= 0) //t2
+            {
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 0)
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                else
+                {
+
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
+                        int i = 0;
+                        while (i < index)
+                        {
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
+                            displayedProducts.Add(productsDto[i]); i++;
+                        }
+                        return displayedProducts;
+                    }
+                }
+            }
+        }
+        public List<ProductResponse> GetByCategoryM6(int categoryId, int index)
+        {
+            Category category = _categoryRepository.Get(categoryId);
+            index = index + 1; //t3
+            if (category == null || index >= 0) //t2
+            {
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 0)
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                else
+                {
+
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
+                        int i = 0;
+                        while (i < index)
+                        {
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
+                            displayedProducts.Add(productsDto[i]); i--; //t1
+                        }
+                        return displayedProducts;
+                    }
+                }
+            }
+        }
+
+        public List<ProductResponse> GetByCategoryM7(int categoryId, int index)
+        {
+            Category category = _categoryRepository.Get(categoryId);
+
+            if (category == null || index < 0)
+            {
+                throw new KeyNotFoundException($"The category with the specified ID ({categoryId}) was not found or the index value was less than 0.");
+            }
+            else
+            {
+                List<Product> products = _productRepository.GetByCategory(categoryId);
+                if (products.Count == 1) //t4
+                {
+                    throw new KeyNotFoundException($"No products were found for the specified category ID ({categoryId}).");
+                }
+                else
+                {
+
+                    List<ProductResponse> productsDto = _mapper.Map<List<ProductResponse>>(products);
+                    if (productsDto.Count < index)
+                    {
+                        throw new KeyNotFoundException($"There are not ({index}) products in this category ({categoryId}).");
+                    }
+                    else
+                    {
+                        List<ProductResponse> displayedProducts = new List<ProductResponse>();
+                        int i = 0;
+                        while (i < index)
+                        {
+                            productsDto[i].DiscountedPrice = productsDto[i].FullPrice - (productsDto[i].FullPrice * productsDto[i].Discount / 100);
+                            displayedProducts.Add(productsDto[i]); i++;
+                        }
+                        return displayedProducts;
+                    }
+                }
+            }
+        }
+
         public void Update(int id, ProductRequest updatedProductDto)
         {
             Product productToUpdate = _productRepository.Get(id);
